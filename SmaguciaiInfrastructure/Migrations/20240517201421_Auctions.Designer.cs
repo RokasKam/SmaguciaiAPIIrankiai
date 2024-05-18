@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmaguciaiInfrastructure.Data;
 
@@ -10,9 +11,10 @@ using SmaguciaiInfrastructure.Data;
 namespace SmaguciaiInfrastructure.Migrations
 {
     [DbContext(typeof(SmaguciaiDataContext))]
-    partial class SmaguciaiDataContextModelSnapshot : ModelSnapshot
+    [Migration("20240517201421_Auctions")]
+    partial class Auctions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.12");
@@ -117,6 +119,9 @@ namespace SmaguciaiInfrastructure.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("INTEGER");
 
+                    b.Property<Guid>("ShippingAddressId")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
@@ -130,6 +135,8 @@ namespace SmaguciaiInfrastructure.Migrations
 
                     b.HasIndex("DiscountcodeId")
                         .IsUnique();
+
+                    b.HasIndex("ShippingAddressId");
 
                     b.HasIndex("UserId");
 
@@ -301,13 +308,10 @@ namespace SmaguciaiInfrastructure.Migrations
                     b.ToTable("Review");
                 });
 
-            modelBuilder.Entity("SmaguciaiDomain.Entities.User", b =>
+            modelBuilder.Entity("SmaguciaiDomain.Entities.ShippingAddress", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("City")
@@ -322,17 +326,45 @@ namespace SmaguciaiInfrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("FlatNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("HouseNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ShippingAddresses");
+                });
+
+            modelBuilder.Entity("SmaguciaiDomain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("FlatNumber")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Gender")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("HouseNumber")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -361,15 +393,7 @@ namespace SmaguciaiInfrastructure.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -424,6 +448,12 @@ namespace SmaguciaiInfrastructure.Migrations
                         .WithOne("Order")
                         .HasForeignKey("SmaguciaiDomain.Entities.Order", "DiscountcodeId");
 
+                    b.HasOne("SmaguciaiDomain.Entities.ShippingAddress", "ShippingAddress")
+                        .WithMany("Order")
+                        .HasForeignKey("ShippingAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SmaguciaiDomain.Entities.User", "User")
                         .WithMany("Order")
                         .HasForeignKey("UserId")
@@ -431,6 +461,8 @@ namespace SmaguciaiInfrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("DiscountCode");
+
+                    b.Navigation("ShippingAddress");
 
                     b.Navigation("User");
                 });
@@ -514,6 +546,17 @@ namespace SmaguciaiInfrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SmaguciaiDomain.Entities.ShippingAddress", b =>
+                {
+                    b.HasOne("SmaguciaiDomain.Entities.User", "User")
+                        .WithOne("ShippingAddress")
+                        .HasForeignKey("SmaguciaiDomain.Entities.ShippingAddress", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SmaguciaiDomain.Entities.Auction", b =>
                 {
                     b.HasOne("SmaguciaiDomain.Entities.Category", null)
@@ -553,6 +596,11 @@ namespace SmaguciaiInfrastructure.Migrations
                     b.Navigation("Report");
                 });
 
+            modelBuilder.Entity("SmaguciaiDomain.Entities.ShippingAddress", b =>
+                {
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("SmaguciaiDomain.Entities.User", b =>
                 {
                     b.Navigation("Bids");
@@ -562,6 +610,9 @@ namespace SmaguciaiInfrastructure.Migrations
                     b.Navigation("Report");
 
                     b.Navigation("Review");
+
+                    b.Navigation("ShippingAddress")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SmaguciaiDomain.Entities.Auction", b =>

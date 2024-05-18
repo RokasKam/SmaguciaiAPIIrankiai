@@ -1,4 +1,5 @@
-﻿using SmaguciaiCore.Requests.Product;
+﻿using SmaguciaiCore.Requests.Category;
+using SmaguciaiCore.Requests.Product;
 using SmaguciaiCore.Responses.Category;
 using SmaguciaiDomain.Entities;
 
@@ -8,4 +9,5 @@ public interface ICategoryService
 {
     List<CategoyResponse> GetAll();
     CategoyResponse GetById(Guid id);
+    Guid AddCategory(CategoryRequest categoryRequest);
 }

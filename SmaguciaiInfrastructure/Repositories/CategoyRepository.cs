@@ -21,6 +21,14 @@ public class CategoryRepository : ICategoryRepository
         return category;  
     }
 
+    public Guid Add(Category category)
+    {
+        category.Id = Guid.NewGuid();
+        _dbContext.Categories.Add(category);
+        _dbContext.SaveChanges();
+        return category.Id;
+    }
+
     public List<Category> GetAll()
     {
         

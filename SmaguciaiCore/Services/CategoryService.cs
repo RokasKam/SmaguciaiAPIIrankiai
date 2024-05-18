@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SmaguciaiCore.Interfaces.Repositories;
 using SmaguciaiCore.Interfaces.Services;
+using SmaguciaiCore.Requests.Category;
 using SmaguciaiCore.Requests.Product;
 using SmaguciaiCore.Responses.Category;
 using SmaguciaiDomain.Entities;
@@ -30,5 +31,11 @@ public class CategoryService : ICategoryService
         var category = _categoryRepository.GetById(id);
         var response = _mapper.Map<CategoyResponse>(category);
         return response;
+    }
+
+    public Guid AddCategory(CategoryRequest categoryRequest)
+    {
+        var response = _mapper.Map<Category>(categoryRequest);
+        return _categoryRepository.Add(response);
     }
 }

@@ -7,4 +7,6 @@ public interface ICategoryRepository
 {
     List<Category> GetAll();
     Category GetById(Guid id);
+    Guid Add(Category category);
+    
 }

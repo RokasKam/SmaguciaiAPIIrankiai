@@ -102,7 +102,7 @@ public class ProductRepository : IProductRepository
     public IEnumerable<Product> GetAll(ProductParameters productParameters)
     {
         
-        IQueryable<Product> entities = _dbContext.Products;
+        IQueryable<Product> entities = _dbContext.Products.Where(p => EF.Property<string>(p, "Discriminator") == "Product");;
 
         entities = entities
             .Skip((productParameters.PageNumber - 1) * productParameters.PageSize)

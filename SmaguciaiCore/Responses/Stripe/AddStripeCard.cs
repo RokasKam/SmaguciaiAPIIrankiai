@@ -6,5 +6,7 @@ namespace Stripe_Payments_Web_Api.Models.Stripe
         string CardNumber,
         string ExpirationYear,
         string ExpirationMonth,
-        string Cvc);
+        string Cvc)
+    {
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using SmaguciaiCore.Interfaces.Services;
+using SmaguciaiCore.Requests.Category;
 using SmaguciaiCore.Requests.Product;
 
 namespace SmaguciaiAPI.Controllers;
@@ -23,5 +24,10 @@ public class CategoryController : BaseController
     public IActionResult GetById(Guid id)
     {
         return Ok(_categoryService.GetById(id));
+    }
+    [HttpPost]
+    public IActionResult AddNew(CategoryRequest categoryRequest)
+    {
+        return Ok(_categoryService.AddCategory(categoryRequest));
     }
 }

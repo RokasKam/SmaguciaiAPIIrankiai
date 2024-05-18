@@ -10,7 +10,5 @@ public class Order : BaseEntity
     public User User { get; set; }
     public Nullable<Guid> DiscountcodeId { get; set; }
     public DiscountCode? DiscountCode { get; set; }
-    public Guid ShippingAddressId { get; set; }
-    public ShippingAddress ShippingAddress { get; set; }
     public ICollection<OrderPorduct> OrderPorducts { get; set; }
 }
