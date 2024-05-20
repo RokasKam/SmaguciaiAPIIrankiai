@@ -55,6 +55,12 @@ public class OrderRepository : IOrderRepository
         _dbContext.SaveChanges();
     }
 
+    public IEnumerable<Order> GetOrdersByUser(Guid userId)
+    {
+        var orders = _dbContext.Orders.Include(o => o.OrderPorducts).ThenInclude(o => o.Product).ThenInclude(o => o.Category).Where(o => o.UserId == userId);
+        return orders.ToList();
+    }
+
     public Guid AddNewOrder(Order order)
     {
         order.Id = Guid.NewGuid();

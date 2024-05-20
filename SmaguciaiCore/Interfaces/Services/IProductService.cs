@@ -14,5 +14,6 @@ public interface IProductService
     bool DeleteProduct(Guid id);
     
     List<ProductResponse> GetAll(ProductParameters productParameters);
-    
+    List<ProductResponse> GetRecommended(Guid userId);
+
 }

@@ -14,4 +14,9 @@ public interface IProductRepository
     bool DeleteProduct(Product product, Category category);
     
     IEnumerable<Product> GetAll(ProductParameters productParameters);
+    
+    IEnumerable<Product> GetAllByCategory(Guid categoryId);
+    
+    IEnumerable<Product> GetAllByGender(Gender gender);
+
 }

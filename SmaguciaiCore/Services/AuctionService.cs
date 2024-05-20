@@ -1,7 +1,6 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using AutoMapper;
-using Microsoft.Extensions.Hosting;
 using SmaguciaiCore.Interfaces.Repositories;
 using SmaguciaiCore.Interfaces.Services;
 using SmaguciaiCore.Requests.Auction;

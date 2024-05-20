@@ -9,4 +9,5 @@ public interface IOrderRepository
     bool UpdatePayment(Guid guid);
     IEnumerable<Order> GetAllPaidOrdersWithUsers();
     void UpdateRoute(Guid orderId, Guid routeId, int routeIndex);
+    IEnumerable<Order> GetOrdersByUser(Guid userId);
 }

@@ -48,7 +48,7 @@ public class GenerateRouteOnMidnight: IHostedService, IDisposable
     private TimeSpan CalculateDelayUntilMidnight()
     {
         DateTime now = DateTime.Now;
-        DateTime targetTime = now.Date.AddHours(14).AddMinutes(21); // Set the target time to 20:30 of the same day
+        DateTime targetTime = now.Date.AddHours(23).AddMinutes(21); // Set the target time to 20:30 of the same day
         TimeSpan delay = targetTime - now;
         return delay;
     }

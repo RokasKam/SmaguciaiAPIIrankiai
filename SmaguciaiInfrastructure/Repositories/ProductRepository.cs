@@ -110,4 +110,14 @@ public class ProductRepository : IProductRepository
 
         return entities.ToList();
     }
+
+    public IEnumerable<Product> GetAllByCategory(Guid categoryId)
+    {
+        return _dbContext.Products.Where(o => o.CategoryId == categoryId).ToList();
+    }
+
+    public IEnumerable<Product> GetAllByGender(Gender gender)
+    {
+        return _dbContext.Products.Where(o => o.Gender == gender);
+    }
 }
