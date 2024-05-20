@@ -17,6 +17,7 @@ public class SmaguciaiDataContext : DbContext
     public DbSet<Report> Reports { get; set; }
     public DbSet<Auction> Auctions { get; set; }
     public DbSet<Bid> Bids { get; set; }
+    public DbSet<Route> Routes { get; set; }
     public SmaguciaiDataContext(DbContextOptions<SmaguciaiDataContext> options) : base(options) { }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +34,6 @@ public class SmaguciaiDataContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReportConfiguration).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AuctionConfiguration).Assembly);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BidConfiguration).Assembly);
-
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(RouteConfiguration).Assembly);
     }
 }

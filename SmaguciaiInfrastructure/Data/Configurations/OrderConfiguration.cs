@@ -17,5 +17,9 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasOne(o => o.DiscountCode)
             .WithOne(d => d.Order)
             .HasForeignKey<Order>(o => o.DiscountcodeId);
+        builder
+            .HasOne(o => o.Route)
+            .WithMany(d => d.Orders)
+            .HasForeignKey(o => o.RouteId);
     }
 }

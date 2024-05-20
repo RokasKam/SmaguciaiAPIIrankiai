@@ -7,4 +7,6 @@ public interface IOrderRepository
     Guid AddNewOrder (Order order);
     Order GetById(Guid id);
     bool UpdatePayment(Guid guid);
+    IEnumerable<Order> GetAllPaidOrdersWithUsers();
+    void UpdateRoute(Guid orderId, Guid routeId, int routeIndex);
 }

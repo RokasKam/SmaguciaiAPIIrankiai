@@ -41,6 +41,20 @@ public class OrderRepository : IOrderRepository
         }
     }
 
+    public IEnumerable<Order> GetAllPaidOrdersWithUsers()
+    {
+        var orders = _dbContext.Orders.Include(o => o.User).Where(o => o.IsPaid && o.RouteIndex == null);
+        return orders.ToList();
+    }
+
+    public void UpdateRoute(Guid orderId, Guid routeId, int routeIndex)
+    {
+        var local = _dbContext.Orders.Local.FirstOrDefault(oldEntity => oldEntity.Id == orderId);
+        local.RouteId = routeId;
+        local.RouteIndex = routeIndex;
+        _dbContext.SaveChanges();
+    }
+
     public Guid AddNewOrder(Order order)
     {
         order.Id = Guid.NewGuid();
